@@ -10,44 +10,45 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <span>Cadastro de Funcionários</span>
-            <button onclick="openModal()" id="new">incluir</button>
+      <div class="header">
+        <span>Cadastro de Funcionários</span>
+        <button onclick="openModal()" id="new">Incluir</i></button>
+      </div>
+  
+      <div class="divTable">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Função</th>
+              <th>Salário</th>
+              <th class="acao">Editar</th>
+              <th class="acao">Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="modal-container">
+        <div class="modal">
+          <form>
+            <label for="m-nome">Nome</label>
+            <input id="m-nome" type="text" required />
+    
+            <label for="m-funcao">Função</label>
+            <input id="m-funcao" type="text" required />
+    
+            <label for="m-salario">Salário</label>
+            <input id="m-salario" type="number" required />
+            <button id="btnSalvar">Salvar</button>
+          </form>
         </div>
-
-        <div class="divTable">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Função</th>
-                        <th>Salário</th>
-                        <th id="acao">Editar</th>
-                        <th id="acao">Excluir</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-
-        <div class="modal-container">
-            <div class="modal">
-                <form>
-                    <label for="m-nome">Nome</label>
-                    <id id="m-nome" type="text" required></id>
-
-                    <label for="m-funcao">Função</label>
-                    <id id="m-funcao" type="text" required></id>
-
-                    <label for="m-salario">Salário</label>
-                    <id id="m-salario" type="number" required></id>
-                    
-                    <button id="btnSalvar">Salvar</button>
-                </form>
-            </div>
-        </div>
-
+      </div>
+  
     </div>
-
     <script src="script.js"></script>
-</body>
-</html>
+  </body>
+  
+  </html>
