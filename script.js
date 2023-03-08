@@ -1,23 +1,23 @@
-const modal = document.querySelector('.modal-container')
-const tbody = document.querySelector('tbody')
-const sNome = document.querySelector('#m-nome')
-const sFuncao = document.querySelector('#m-funcao')
-const sSalario = document.querySelector('#m-salario')
-const btnSalvar = document.querySelector('#btnSalvar')
+const modal = document.querySelector('.modal-container');
+const tbody = document.querySelector('tbody');
+const sNome = document.querySelector('#m-nome');
+const sFuncao = document.querySelector('#m-funcao');
+const sSalario = document.querySelector('#m-salario');
+const btnSalvar = document.querySelector('#btnSalvar');
 
-let itens
-let id
+let itens;
+let id;
 
-function openModal(edit = false, index = 0) {
-  modal.classList.add('active')
+function openModal(edit = false, index = 0) { //abrir o modal na tela
+    modal.classList.add('active');
 
-  modal.onclick = e => {
-    if (e.target.className.indexOf('modal-container') !== -1) {
-      modal.classList.remove('active')
-    }
-  }
+    modal.onclick = e => {
+        if (e.target.className.indexOf('modal-container') !== -1) {
+            modal.classList.remove('active') //se clicar fora do modal, ele fecha
+        };
+    };
 
-  if (edit) {
+  if (edit) { //atribuindo os valores
     sNome.value = itens[index].nome
     sFuncao.value = itens[index].funcao
     sSalario.value = itens[index].salario
@@ -26,71 +26,71 @@ function openModal(edit = false, index = 0) {
     sNome.value = ''
     sFuncao.value = ''
     sSalario.value = ''
-  }
+    };
   
-}
+};
 
-function editItem(index) {
+function editItem(index) { // quando for editar, abre o modal novamente.
 
-  openModal(true, index)
-}
+    openModal(true, index);
+};
 
-function deleteItem(index) {
-  itens.splice(index, 1)
-  setItensBD()
-  loadItens()
-}
+function deleteItem(index) { //deletando um cadastro do array, pelo indice, inserido na criação
+    itens.splice(index, 1);
+    setItensBD();
+    loadItens();
+};
 
-function insertItem(item, index) {
-  let tr = document.createElement('tr')
+function insertItem(item, index) { //adicionando o novo cadastro na tela.
+    let tr = document.createElement('tr');
 
-  tr.innerHTML = `
-    <td>${item.nome}</td>
-    <td>${item.funcao}</td>
-    <td>R$ ${item.salario}</td>
-    <td class="acao">
-      <button onclick="editItem(${index})"><i class='bx bx-edit' ></i></button>
-    </td>
-    <td class="acao">
-      <button onclick="deleteItem(${index})"><i class='bx bx-trash'></i></button>
-    </td>
-  `
-  tbody.appendChild(tr)
+    tr.innerHTML = `
+        <td>${item.nome}</td>
+        <td>${item.funcao}</td>
+        <td>R$ ${item.salario}</td>
+        <td class="acao">
+        <button onclick="editItem(${index})"><i class='bx bx-edit' ></i></button>
+        </td>
+        <td class="acao">
+        <button onclick="deleteItem(${index})"><i class='bx bx-trash'></i></button>
+        </td>
+     `;
+    tbody.appendChild(tr);
 }
 
 btnSalvar.onclick = e => {
   
-  if (sNome.value == '' || sFuncao.value == '' || sSalario.value == '') {
-    return
-  }
+    if (sNome.value == '' || sFuncao.value == '' || sSalario.value == '') { // se for vazio os campos, ele faz validação nativa
+        return
+    };
 
-  e.preventDefault();
+    e.preventDefault(); //evitando que o click no botão mande diretamente a ação.
 
-  if (id !== undefined) {
-    itens[id].nome = sNome.value
-    itens[id].funcao = sFuncao.value
-    itens[id].salario = sSalario.value
-  } else {
-    itens.push({'nome': sNome.value, 'funcao': sFuncao.value, 'salario': sSalario.value})
-  }
+    if (id !== undefined) { //criar os dados se as areas forem diferentes de indefinido ou vazio.
+        itens[id].nome = sNome.value;
+        itens[id].funcao = sFuncao.value;
+        itens[id].salario = sSalario.value;
+    } else {
+        itens.push({ 'nome': sNome.value, 'funcao': sFuncao.value, 'salario': sSalario.value });
+    };
 
-  setItensBD()
+    setItensBD();
 
-  modal.classList.remove('active')
-  loadItens()
-  id = undefined
-}
+    modal.classList.remove('active'); //assim que o modal for finalziado, ele já recarrega os itens ou atualiza
+    loadItens();
+    id = undefined;
+};
 
-function loadItens() {
-  itens = getItensBD()
+function loadItens() { //carregar itens
+  itens = getItensBD() //pegando cada item do BD
   tbody.innerHTML = ''
-  itens.forEach((item, index) => {
-    insertItem(item, index)
-  })
+    itens.forEach((item, index) => {
+        insertItem(item, index)
+    });
 
-}
+};
 
-const getItensBD = () => JSON.parse(localStorage.getItem('dbfunc')) ?? []
-const setItensBD = () => localStorage.setItem('dbfunc', JSON.stringify(itens))
+const getItensBD = () => JSON.parse(localStorage.getItem('dbfunc')) ?? []; // Pega os elementos no BD(localStorage), se não encontrar, retonar um array vazio
+const setItensBD = () => localStorage.setItem('dbfunc', JSON.stringify(itens)); //Seta os dadoss para o BD
 
-loadItens()
+loadItens(); // Carregar os itens
