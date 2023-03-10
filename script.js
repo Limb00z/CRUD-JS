@@ -54,8 +54,9 @@ function insertItem(item, index) { //adicionando o novo cadastro na tela.
         <td class="acao">
         <button onclick="deleteItem(${index})"><i class='bx bx-trash'></i></button>
         </td>
-     `;
-    tbody.appendChild(tr);
+     `; // criando elemento que será inserido na tela
+    
+    tbody.appendChild(tr); //inserindo na tela os elemntos acima, via variavel
 }
 
 btnSalvar.onclick = e => {
